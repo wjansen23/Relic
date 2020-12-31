@@ -2,6 +2,9 @@
 
 namespace RPG.UI
 {
+    /// <summary>
+    /// Hides and unhides gameobjects based on a key input
+    /// </summary>
     public class ShowHideUI : MonoBehaviour
     {
         [SerializeField] KeyCode m_ToggleKey = KeyCode.Escape;

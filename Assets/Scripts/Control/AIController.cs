@@ -61,7 +61,15 @@ namespace RPG.Control
         // Update is called once per frame
         void Update()
         {
-            if (m_Health.IsDead()) return;                  //Check if AI is dead
+            //Check if AI is dead
+            if (m_Health.IsDead())
+            {
+                //Make sure the body does not move or rotate
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                GetComponent<Rigidbody>().rotation = Quaternion.identity;
+                return;
+            }
+
             UpdateTimers();
 
             //Check other behavoirs

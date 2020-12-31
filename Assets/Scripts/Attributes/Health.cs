@@ -52,8 +52,12 @@ namespace RPG.Attributes
             m_CurrentHealth = new LazyValue<float>(GetInitialHealth);
         }
 
-        //Used for setting initial health in awake.  Must be of type float because health is a 
-        //Lazy value of type health
+
+        /// <summary>
+        /// Used for setting initial health in awake.  Must be of type float because health is a 
+        /// Lazy value of type health
+        /// </summary>
+        /// <returns></returns>
         private float GetInitialHealth()
         {
             return m_BaseStats.GetStat(StatType.Health);
@@ -75,7 +79,9 @@ namespace RPG.Attributes
             m_BaseStats.onLevelUp -= LevelUp;
         }
 
-        //Boosts a players healths everytime the level up.
+        /// <summary>
+        /// Boosts a players healths everytime the level up.
+        /// </summary>
         private void LevelUp()
         {
             //Compute health based on percentage and difference from max health for level
@@ -83,7 +89,9 @@ namespace RPG.Attributes
             HealDamage(healthBoost);
         }
 
-        //Deals with the death behavoir of the character
+        /// <summary>
+        /// Deals with the death behavoir of the character
+        /// </summary>
         private void DeathBehavoir()
         {
             if (!m_IsDead)
@@ -94,7 +102,10 @@ namespace RPG.Attributes
             }
         }
 
-        //Award experience to the attacker on death
+        /// <summary>
+        /// Award experience to the attacker on death
+        /// </summary>
+        /// <param name="attacker"></param>
         private void AwardXP(GameObject attacker)
         {
             Experience xpComp = attacker.GetComponent<Experience>();
@@ -106,7 +117,11 @@ namespace RPG.Attributes
 
         ///////////////////////////// PUBLIC METHODS ////////////////////////////////////////////        
 
-        //Reduces the health of the character or object
+        /// <summary>
+        /// Reduces the health of the character or object
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="damage"></param>
         public void TakeDamage(GameObject attacker, float damage)
         {
             //Decrement health but only to zero.
@@ -127,7 +142,10 @@ namespace RPG.Attributes
 
         }
 
-        //Increases the health of a the character or object
+        /// <summary>
+        /// Increases the health of a the character or object
+        /// </summary>
+        /// <param name="healing"></param>
         public void HealDamage(float healing)
         {
             float maxLvlHP = m_BaseStats.GetStat(StatType.Health);
@@ -137,25 +155,37 @@ namespace RPG.Attributes
             //Debug.Log("Health-HealDamage: " + maxLvlHP + ":" + healing);
         }
 
-        //Return the percentage of health remaining
+        /// <summary>
+        /// Return the percentage of health remaining
+        /// </summary>
+        /// <returns></returns>
         public float getHealthPercent()
         {
             return 100 * m_CurrentHealth.value/m_BaseStats.GetStat(StatType.Health);
         }
 
-        //Returns current health value
+        /// <summary>
+        /// Returns current health value
+        /// </summary>
+        /// <returns></returns>
         public float getHealthPoints()
         {
             return m_CurrentHealth.value;
         }
 
-        //Returns maximum health points for current level
+        /// <summary>
+        /// Returns maximum health points for current level
+        /// </summary>
+        /// <returns></returns>
         public float getMaxHealthPoints()
         {
             return m_BaseStats.GetStat(StatType.Health);
         }
 
-        //Returns isDead boolena
+        /// <summary>
+        /// Returns isDead boolena
+        /// </summary>
+        /// <returns></returns>
         public bool IsDead()
         {
             return m_IsDead;

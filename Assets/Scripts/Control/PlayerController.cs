@@ -45,6 +45,10 @@ namespace RPG.Control
             if (m_Health.IsDead())
             {
                 SetCursor(CursorType.None);
+
+                //Make sure the body does not move or rotate
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                GetComponent<Rigidbody>().rotation = Quaternion.identity;
                 return;
             }
 

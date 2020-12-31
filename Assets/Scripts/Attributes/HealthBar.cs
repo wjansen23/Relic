@@ -14,6 +14,9 @@ namespace RPG.Attributes
             UpdateHealthBar();
         }
 
+        /// <summary>
+        /// Updates the health bar display based on percentage of health remaining
+        /// </summary>
         private void UpdateHealthBar()
         {
             if (Mathf.Approximately(m_HealthComp.getHealthPercent() / 100, 1) || m_HealthComp.IsDead())
@@ -25,7 +28,10 @@ namespace RPG.Attributes
             ShowHideBar(true);
         }
 
-        //Show or hide the bar
+        /// <summary>
+        /// Show or hide the health bar
+        /// </summary>
+        /// <param name="flag"></param>
         private void ShowHideBar(bool flag)
         {
             m_BarCanvas.enabled= flag;
