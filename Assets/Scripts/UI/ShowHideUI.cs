@@ -10,13 +10,17 @@ namespace RPG.UI
         [SerializeField] KeyCode m_ToggleKey = KeyCode.Escape;
         [SerializeField] GameObject m_UIContainer = null;
 
-        // Start is called before the first frame update
+        /// <summary>
+        /// Start is called before the first frame update
+        /// </summary>
         void Start()
         {
             m_UIContainer.SetActive(false);
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
         void Update()
         {
             if (Input.GetKeyDown(m_ToggleKey))

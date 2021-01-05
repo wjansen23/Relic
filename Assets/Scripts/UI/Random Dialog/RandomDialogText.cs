@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace RPG.UI
 {
+    /// <summary>
+    /// This class controlls the spawning of random dialog text over a character
+    /// </summary>
     public class RandomDialogText : MonoBehaviour
     {
         [SerializeField] Text m_RandomText = null;          //Reference to Text
@@ -17,6 +20,10 @@ namespace RPG.UI
         {
 
         }
+
+        /// <summary>
+        /// Checks if dialog is already spawned.  If not, randomly determine if it should spawn text.
+        /// </summary>
         private void Update()
         {
             if (m_DialogTextList == null) return;
@@ -32,7 +39,11 @@ namespace RPG.UI
             StartCoroutine(SpawnText(m_DialogTextList[index]));
         }
 
-        //Spawns the prefab with the sent value
+        /// <summary>
+        /// Spawns the prefab with the sent value
+        /// </summary>
+        /// <param name="dialogText"></param>
+        /// <returns></returns>
         private IEnumerator SpawnText(string dialogText)
         {
             m_Displaying = true;
@@ -43,6 +54,10 @@ namespace RPG.UI
             m_Displaying = false;
         }
 
+        /// <summary>
+        /// Don't spawn any text for the given display time
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator SpawnNothing()
         {
             ShowDialog(false);
@@ -51,6 +66,10 @@ namespace RPG.UI
             m_Displaying = false;
         }
 
+        /// <summary>
+        /// Enables/Disables the text display.
+        /// </summary>
+        /// <param name="bShow"></param>
         private void ShowDialog(bool bShow)
         {
             GetComponent<Canvas>().enabled = bShow;

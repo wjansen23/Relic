@@ -10,6 +10,10 @@ using System;
 
 namespace RPG.Combat
 {
+
+    /// <summary>
+    /// This class is responsible for enable a character to engage in combat within the game
+    /// </summary>
     public class CharacterCombat : MonoBehaviour, IAction, ISaveable,IModifierProvider
     {
 
@@ -34,7 +38,9 @@ namespace RPG.Combat
         ///////////////////////////// INTERFACE METHODS ////////////////////////////////////////////
 
         //IACTION INTERFACE
-        //Clear the current attack target
+        /// <summary>
+        /// Clear the current attack target
+        /// </summary>
         public void Cancel()
         {
             m_Target = null;
@@ -42,11 +48,19 @@ namespace RPG.Combat
         }
 
         //ISAVEABLE INTERFACE
+        /// <summary>
+        /// Capture state of combat component
+        /// </summary>
+        /// <returns></returns>
         public object CaptureState()
         {
             return m_currentWeaponConfig.name;
         }
 
+        /// <summary>
+        /// Restore state of combat component
+        /// </summary>
+        /// <param name="state"></param>
         public void RestoreState(object state)
         {
             //Look for weapon types in the resources folder with the name equal to m_defaultWeaponName.
@@ -56,7 +70,11 @@ namespace RPG.Combat
         }
 
         //IModifierProvider
-        //Returns additive stat modifiers
+        /// <summary>
+        /// Returns additive stat modifiers
+        /// </summary>
+        /// <param name="reqStat"></param>
+        /// <returns></returns>
         public IEnumerable<float> GetStatAdditiveModifiers(StatType reqStat)
         {
             //This is an example.  Combat will not return any stat modifiers for damage
@@ -66,7 +84,11 @@ namespace RPG.Combat
             }
         }
 
-        //Returns multiplicative stat modifiers
+        /// <summary>
+        /// Returns multiplicative stat modifiers
+        /// </summary>
+        /// <param name="reqStat"></param>
+        /// <returns></returns>
         public IEnumerable<float> GetStatPercentageModifiers(StatType reqStat)
         {
             //This is an example.  Combat will not return any stat modifiers for damage
@@ -89,19 +111,26 @@ namespace RPG.Combat
             m_currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
         }
 
-        //Sets up the default weapon for the character
+        /// <summary>
+        /// Sets up the default weapon for the character
+        /// </summary>
+        /// <returns></returns>
         private Weapon SetupDefaultWeapon()
         {
             return AttachWeaponToCharacter(m_defaultWeapon);
         }
 
-        // Start is called before the first frame update
+        /// <summary>
+        /// Start is called before the first frame update
+        /// </summary>
         void Start()
         {
             m_currentWeapon.ForceInit();
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
         void Update()
         {
             m_timeSinceLastAttack += Time.deltaTime;
@@ -121,7 +150,9 @@ namespace RPG.Combat
             }
         }
 
-        //Deals with the attacking behavoir of the character
+        /// <summary>
+        /// Deals with the attacking behavoir of the character
+        /// </summary>
         private void AttackBehavoir()
         {
             //Make sure looking at target
@@ -137,13 +168,19 @@ namespace RPG.Combat
 
         }
 
-        //Checks if the character is within the range of their currently equiped weapon
+        /// <summary>
+        /// Checks if the character is within the range of their currently equiped weapon
+        /// </summary>
+        /// <param name="targetTransform"></param>
+        /// <returns></returns>
         private bool InWeaponRange(Transform targetTransform)
         {
             return Vector3.Distance(this.transform.position, targetTransform.position) <= m_currentWeaponConfig.GetWeaponRange();
         }
 
-        //Handles the hit event from an animation
+        /// <summary>
+        /// Handles the hit event from an animation
+        /// </summary>
         void Hit()
         {
             //If we have lost the target then just return.  Can happen when canceling an attack prior to hit event.
@@ -164,7 +201,9 @@ namespace RPG.Combat
             m_Target.TakeDamage(gameObject, totalDamage);
         }
 
-        //Handles the shoot event from an animation
+        /// <summary>
+        /// Handles the shoot event from an animation
+        /// </summary>
         void Shoot()
         {
             //If we have lost the target then just return.  Can happen when canceling an attack prior to hit event.
@@ -182,21 +221,29 @@ namespace RPG.Combat
             }
         }
 
-        //Sets the triggers for attacking
+        /// <summary>
+        /// Sets the triggers for attacking
+        /// </summary>
         private void SetAttackTriggers()
         {
             m_Animator.ResetTrigger("stopAttack");
             m_Animator.SetTrigger("isAttacking");
         }
 
-        //Sets the triggers for stopping an attack
+        /// <summary>
+        /// Sets the triggers for stopping an attack
+        /// </summary>
         private void SetStopAttackTriggers()
         {
             m_Animator.SetTrigger("stopAttack");
             m_Animator.ResetTrigger("isAttacking");
         }
 
-        //Attachs the weapon to the character
+        /// <summary>
+        /// Attachs the weapon to the character
+        /// </summary>
+        /// <param name="weapon"></param>
+        /// <returns></returns>
         private Weapon AttachWeaponToCharacter(WeaponConfig weapon)
         {
             //Spawn the weapon
@@ -206,7 +253,10 @@ namespace RPG.Combat
 
         ///////////////////////////// PUBLIC METHODS ////////////////////////////////////////////        
 
-        //Attacks the target
+        /// <summary>
+        /// Attacks the target
+        /// </summary>
+        /// <param name="combatTarget"></param>
         public void Attack(GameObject combatTarget)
         {
             //Schedule attack action
@@ -217,7 +267,11 @@ namespace RPG.Combat
             //Debug.Log("Attacking: " + combatTarget.name);
          }
 
-        //Returns whether or not the taret can be attacked
+        /// <summary>
+        /// Returns whether or not the taret can be attacked
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public bool CanAttack(GameObject target)
         {
             //Make sure target is not null
@@ -231,13 +285,19 @@ namespace RPG.Combat
             return targetHealth != null && !targetHealth.IsDead();
         }
 
-        //Returns the current target
+        /// <summary>
+        /// Returns the current target
+        /// </summary>
+        /// <returns></returns>
         public Health GetTarget()
         {
             return m_Target;
         }
 
-        //Interface for equipping a weapon into the hand of the character
+        /// <summary>
+        /// Interface for equipping a weapon into the hand of the character
+        /// </summary>
+        /// <param name="weapon"></param>
         public void EquipWeapon(WeaponConfig weapon)
         {
             //Update current weapon

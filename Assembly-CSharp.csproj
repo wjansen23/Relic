@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Asset Packs\GameDev.tv Assets\Scripts\Utils\LazyValue.cs" />
-    <Compile Include="Assets\Destroyer.cs" />
     <Compile Include="Assets\Scripts\Attributes\Health.cs" />
     <Compile Include="Assets\Scripts\Attributes\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Combat\CharacterCombat.cs" />
@@ -87,6 +86,9 @@
     <Compile Include="Assets\Scripts\Core\UI\Dragging\IDragContainer.cs" />
     <Compile Include="Assets\Scripts\Core\UI\Dragging\IDragDestination.cs" />
     <Compile Include="Assets\Scripts\Core\UI\Dragging\IDragSource.cs" />
+    <Compile Include="Assets\Scripts\Destroyer.cs" />
+    <Compile Include="Assets\Scripts\Inventories\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Inventories\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\Movement\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Pickups\HealthPickup.cs" />
     <Compile Include="Assets\Scripts\Pickups\WeaponPickup.cs" />
@@ -105,9 +107,10 @@
     <Compile Include="Assets\Scripts\Stats\StatType.cs" />
     <Compile Include="Assets\Scripts\UI\DamageText\DamageText.cs" />
     <Compile Include="Assets\Scripts\UI\DamageText\DamageTextSpawner.cs" />
-    <Compile Include="Assets\Scripts\UI\Inventory\InventoryDragItem.cs" />
-    <Compile Include="Assets\Scripts\UI\Inventory\InventoryItemIcon.cs" />
-    <Compile Include="Assets\Scripts\UI\Inventory\InventorySlotUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventories\InventoryDragItem.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventories\InventoryItemIcon.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventories\InventorySlotUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Inventories\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD\PlayerHealthDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD\PlayerLevelDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD\PlayerXPDisplay.cs" />

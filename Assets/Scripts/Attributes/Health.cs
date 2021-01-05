@@ -69,11 +69,17 @@ namespace RPG.Attributes
             m_CurrentHealth.ForceInit();
         }
 
+        /// <summary>
+        /// Perform actions when component is enabled
+        /// </summary>
         private void OnEnable()
         {
             m_BaseStats.onLevelUp += LevelUp;
         }
 
+        /// <summary>
+        /// Perform actions when component is disabled
+        /// </summary>
         private void OnDisable()
         {
             m_BaseStats.onLevelUp -= LevelUp;

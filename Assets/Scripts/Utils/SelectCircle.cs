@@ -4,6 +4,9 @@ using RPG.Attributes;
 
 namespace RPG.UI
 {
+    /// <summary>
+    /// This class is responsible for displaying a circle underneath a character when moused over
+    /// </summary>
     public class SelectCircle : MonoBehaviour
     {
         [SerializeField] ParticleSystem m_ParticleSystem = null;                 //Reference to particle system
@@ -21,6 +24,9 @@ namespace RPG.UI
 
         bool m_BeingAttacked = false;                                           //Used to determine whether to show the circle if being attacked or not
 
+        /// <summary>
+        /// Sets up necessary component references along with the particle system
+        /// </summary>
         void Start()
         {
             m_Player = GameObject.FindWithTag("Player");
@@ -39,6 +45,9 @@ namespace RPG.UI
             }
         }
 
+        /// <summary>
+        /// Checks each update to see if a the cursor is over a character and whether or not the turn the circle on or off
+        /// </summary>
         private void Update()
         {
             if (m_Health.IsDead())
@@ -59,7 +68,9 @@ namespace RPG.UI
             }
         }
 
-        //Called whenever the mouse hovers over a gameObject with a collider and this script
+        /// <summary>
+        /// Called whenever the mouse hovers over a gameObject with a collider and this script
+        /// </summary>
         void OnMouseOver()
         {
             //Make sure not dead
@@ -68,7 +79,9 @@ namespace RPG.UI
             //Debug.Log("In mouse over");
         }
 
-        //The mouse is no longer hovering over the GameObject
+        /// <summary>
+        /// The mouse is no longer hovering over the GameObject
+        /// </summary>
         void OnMouseExit()
         {
             //Make sure not dead
@@ -82,7 +95,9 @@ namespace RPG.UI
             TurnOffCircle();
         }
 
-        //Displays the character circle
+        /// <summary>
+        /// Displays the character circle
+        /// </summary>
         void TurnOnCircle()
         {
             if (m_ParticleSystem == null) return;
@@ -92,14 +107,22 @@ namespace RPG.UI
             }
         }
 
-        //Stops displaying the circle
+        /// <summary>
+        /// Stops displaying the circle
+        /// </summary>
         void TurnOffCircle()
         {
             if (m_ParticleSystem == null) return;
             m_ParticleSystem.Stop();
         }
 
-        //Puts a new four color gradient on the object.
+        /// <summary>
+        /// Puts a new four color gradient on the object.
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <param name="c3"></param>
+        /// <param name="c4"></param>
         void SetGradient(Color c1, Color c2, Color c3, Color c4)
         {
             // Reduce the alpha

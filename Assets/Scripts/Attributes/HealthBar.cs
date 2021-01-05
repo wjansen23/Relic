@@ -2,6 +2,10 @@
 
 namespace RPG.Attributes
 {
+
+    /// <summary>
+    /// This class manages the updating and display of a character health bar
+    /// </summary>
     public class HealthBar : MonoBehaviour
     {
         [SerializeField] Health m_HealthComp = null;            //Reference to health component
