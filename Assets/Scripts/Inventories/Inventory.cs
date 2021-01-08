@@ -69,11 +69,11 @@ namespace RPG.Inventories
         // Start is called before the first frame update
         void Awake()
         {
-            //Set up the slots array.  THIS IS FOR DEBUGGIN. CHANGE UUID.
             m_slots = new InventoryItem[m_InventorySize];
-            m_slots[0] = InventoryItem.GetFromID("db4ec621-110b-490f-b18c-7bf427e93c78");
-            m_slots[1] = InventoryItem.GetFromID("a9d3213f-3ce6-4999-aec9-fcd40c882305");
-            m_slots[10] = InventoryItem.GetFromID("954f42be-081d-43be-8d77-772c3af5aaaf");
+            //Set up the slots array.  THIS IS FOR DEBUGGIN. CHANGE UUID.
+            //m_slots[0] = InventoryItem.GetFromID("db4ec621-110b-490f-b18c-7bf427e93c78");
+            //m_slots[1] = InventoryItem.GetFromID("a9d3213f-3ce6-4999-aec9-fcd40c882305");
+            //m_slots[10] = InventoryItem.GetFromID("954f42be-081d-43be-8d77-772c3af5aaaf");
         }
 
 
@@ -102,7 +102,7 @@ namespace RPG.Inventories
             return -1;
         }
 
-        ///////////////////////////// PRIVATE METHODS //////////////////////////////////////////// 
+        ///////////////////////////// PUBLIC METHODS //////////////////////////////////////////// 
 
         /// <summary>
         /// Convenience for getting the player's inventory.
@@ -140,6 +140,7 @@ namespace RPG.Inventories
         /// <returns>Whether or not the item could be added.</returns>
         public bool AddToFirstEmptySlot(InventoryItem item)
         {
+            Debug.Log("Add to first slot");
             //Get empty slot
             int i = FindSlot(item);
 

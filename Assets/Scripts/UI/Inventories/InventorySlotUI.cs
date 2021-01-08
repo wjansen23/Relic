@@ -8,7 +8,7 @@ namespace RPG.UI.Inventories
     /// To be put on the object representing an inventory slot. Allows the slot to
     /// update the icon and number.
     /// </summary>
-    public class InventorySlotUI : MonoBehaviour, IDragContainer<InventoryItem>
+    public class InventorySlotUI : MonoBehaviour, IItemHolder, IDragContainer<InventoryItem>
     {
         [SerializeField] InventoryItemIcon m_Icon = null;
 

@@ -12,6 +12,7 @@ namespace RPG.Control
         MagicAttack,
         Pickup,
         UI,
-        Door
+        Door,
+        FullInventory
     }
 }

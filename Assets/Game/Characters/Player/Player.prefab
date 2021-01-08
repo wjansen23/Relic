@@ -32,6 +32,9 @@ MonoBehaviour:
   - type: 8
     image: {fileID: 2800000, guid: 4a225af5ff45ff54487db8e59d69b5ab, type: 3}
     hotspot: {x: 0, y: 0}
+  - type: 9
+    image: {fileID: 2800000, guid: cecad95c851b97f40b105b30b0bfede3, type: 3}
+    hotspot: {x: 0, y: 0}
 --- !u!114 &2301525421067837875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,6 +61,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InventorySize: 16
+--- !u!114 &925041146797403382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8846797786133063258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d83b65293369544a42d6d026282122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4117512718086852736
 PrefabInstance:
   m_ObjectHideFlags: 0

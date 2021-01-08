@@ -20,13 +20,15 @@ namespace RPG.Inventories
         [Tooltip("Item name to be displayed in UI.")]
         [SerializeField] string m_DisplayName=null;
         [Tooltip("Item description to be displayed in UI.")]
-        [SerializeField] string m_Description = null;
+        [SerializeField] [TextArea] string m_Description = null;
         [Tooltip("The UI icon to represent this item in the inventory.")]
         [SerializeField] Sprite m_Icon = null;
-        [Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")]
-        [SerializeField] bool m_Stackable = false;
+        [Tooltip("The prefab that is spawned when the item is dropped")]
+        [SerializeField] Pickup m_Pickup = null;
         [Tooltip("How many inventory slots does it require")]
         [SerializeField] int m_InventorySlotsUsed = 1;
+        [Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")]
+        [SerializeField] bool m_Stackable = false;
 
         static Dictionary<string, InventoryItem> m_ItemLookupCache;
 
@@ -144,6 +146,21 @@ namespace RPG.Inventories
         public string GetDescription()
         {
             return m_Description;
+        }
+
+        /// <summary>
+        /// Spawns the pickup prefab into the world
+        /// </summary>
+        /// <param name="position">Where to spawn</param>
+        /// <returns>Reference to spawned pickup</returns>
+        public Pickup SpawnPickup(Vector3 position)
+        {
+            var pickup = Instantiate(this.m_Pickup);
+
+            //Set position and steup the pickup before returning.
+            pickup.transform.position = position;
+            pickup.Setup(this);
+            return pickup;
         }
 
     }

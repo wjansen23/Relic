@@ -592,6 +592,7 @@ GameObject:
   - component: {fileID: 3578736426226908562}
   - component: {fileID: 7758083092376193521}
   - component: {fileID: 8576078945289567130}
+  - component: {fileID: 337326709202246875}
   m_Layer: 5
   m_Name: InfoPanelCanvas
   m_TagString: Untagged
@@ -693,6 +694,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ToggleKey: 105
   m_UIContainer: {fileID: 9188799838932215289}
+--- !u!114 &337326709202246875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8023344816781728626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed07af45ddf5b5449accfd6fc4368fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9188799838932215289
 GameObject:
   m_ObjectHideFlags: 0
@@ -2430,7 +2443,7 @@ PrefabInstance:
     - target: {fileID: 6494633494663441050, guid: 230d4405e4f8a9a4f9a98a23adbfcf4b,
         type: 3}
       propertyPath: m_ChildAlignment
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6494633494663441050, guid: 230d4405e4f8a9a4f9a98a23adbfcf4b,
         type: 3}
@@ -2690,12 +2703,12 @@ PrefabInstance:
     - target: {fileID: 7627347240754307429, guid: 230d4405e4f8a9a4f9a98a23adbfcf4b,
         type: 3}
       propertyPath: m_Size
-      value: 0.9999998
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7627347240754307429, guid: 230d4405e4f8a9a4f9a98a23adbfcf4b,
         type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7627347240754307429, guid: 230d4405e4f8a9a4f9a98a23adbfcf4b,
         type: 3}
