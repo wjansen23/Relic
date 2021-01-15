@@ -18,6 +18,7 @@ namespace RPG.Inventories
         {
             public string itemID;
             public SerializableVector3 position;
+            public int number;
         }
 
         ///////////////////////////// INTERFACES //////////////////////////////////////////// 
@@ -31,6 +32,7 @@ namespace RPG.Inventories
             {
                 droppedItemList[i].itemID = m_DroppedItems[i].GetItem().GetItemID();
                 droppedItemList[i].position = new SerializableVector3(m_DroppedItems[i].transform.position);
+                droppedItemList[i].number = m_DroppedItems[i].GetNumber();
             }
 
             return droppedItemList;
@@ -38,7 +40,16 @@ namespace RPG.Inventories
 
         public void RestoreState(object state)
         {
-            throw new System.NotImplementedException();
+            var droppedItemList = (DropRecord[])state;
+
+            foreach(var item in droppedItemList)
+            {
+                var pickupItem = InventoryItem.GetFromID(item.itemID);
+                Vector3 position = item.position.ToVector();
+                int number = item.number;
+
+                SpawnPickup(pickupItem, position, number);
+            }
         }
 
         ///////////////////////////// PRIVATE METHODS //////////////////////////////////////////// 
@@ -48,10 +59,10 @@ namespace RPG.Inventories
         /// </summary>
         /// <param name="item"></param>
         /// <param name="position"></param>
-        private void SpawnPickup(InventoryItem item, Vector3 position)
+        private void SpawnPickup(InventoryItem item, Vector3 position, int number)
         {
             //Spawn the item and add to dropped list
-            var pickup = item.SpawnPickup(position);
+            var pickup = item.SpawnPickup(position, number);
             m_DroppedItems.Add(pickup);
 
         }
@@ -90,9 +101,9 @@ namespace RPG.Inventories
         /// Drops the item into the world.
         /// </summary>
         /// <param name="item"></param>
-        public void DropItem(InventoryItem item)
+        public void DropItem(InventoryItem item, int number)
         {
-            SpawnPickup(item, GetDropLocation());
+            SpawnPickup(item, GetDropLocation(),number);
         }
     }
 }

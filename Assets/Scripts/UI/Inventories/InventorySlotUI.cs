@@ -24,7 +24,7 @@ namespace RPG.UI.Inventories
         /// <param name="number"></param>
         public void AddItems(InventoryItem item, int number)
         {
-            m_Inventory.AddItemToSlot(m_Index, item);
+            m_Inventory.AddItemToSlot(m_Index, item,number);
         }
 
 
@@ -43,7 +43,7 @@ namespace RPG.UI.Inventories
         /// <returns></returns>
         public int GetNumber()
         {
-            return 1;
+            return m_Inventory.GetNumberInSlot(m_Index);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace RPG.UI.Inventories
         /// <param name="index"></param>
         public void RemoveItems(int number)
         {
-            m_Inventory.RemoveFromSlot(m_Index);
+            m_Inventory.RemoveFromSlot(m_Index, number);
         }
 
         ///////////////////////////// PUBLIC METHODS ////////////////////////////////////////////
@@ -76,8 +76,7 @@ namespace RPG.UI.Inventories
         {
             m_Inventory = inventory;
             m_Index = slotnum;
-            m_Icon.SetItem(m_Inventory.GetItemInSlot(slotnum));
-
+            m_Icon.SetItem(m_Inventory.GetItemInSlot(slotnum), m_Inventory.GetNumberInSlot(slotnum));
         }
 
         ///////////////////////////// PRIVATE METHODS ////////////////////////////////////////////

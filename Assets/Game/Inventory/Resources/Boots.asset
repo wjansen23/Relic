@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8dada44884b5c4ab36ac2452f8ed24, type: 3}
+  m_Script: {fileID: 11500000, guid: 9870bd22fb23cd944b8afd280872b119, type: 3}
   m_Name: Boots
   m_EditorClassIdentifier: 
-  m_ItemID: db4ec621-110b-490f-b18c-7bf427e93c78
-  m_DisplayName: Boots
-  m_Description: Simple leather boots
+  m_ItemID: 09959361-927c-4348-b530-dea58fc3dd63
+  m_DisplayName: Boots (Test)
+  m_Description: A pair of worn leather boots.  (FOR TESTING)
   m_Icon: {fileID: 21300000, guid: 56db6d140fc0ce246a8997e89395bd12, type: 3}
+  m_Pickup: {fileID: 1342250136682129882, guid: 86c665d157888c449badb8c8ec385558,
+    type: 3}
+  m_MaxPerSlot: 1
   m_Stackable: 0
-  m_InventorySlotsUsed: 1
+  m_EquipLocation: 4

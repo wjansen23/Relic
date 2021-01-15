@@ -10,6 +10,7 @@ namespace RPG.Inventories
     public class PickupSpawner : MonoBehaviour,ISaveable
     {
         [SerializeField] InventoryItem m_Item = null;       //Reference to the Pickup item the spawner spawns
+        [SerializeField] int m_Number = 1;                  //Number of the item to spawn
 
         ///////////////////////////// INTERFACES //////////////////////////////////////////// 
         
@@ -58,7 +59,7 @@ namespace RPG.Inventories
         /// </summary>
         private void SpawnPickup()
         {
-            var spawnedPickup = m_Item.SpawnPickup(transform.position);
+            var spawnedPickup = m_Item.SpawnPickup(transform.position, m_Number);
             spawnedPickup.transform.SetParent(transform);
         }
 

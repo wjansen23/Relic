@@ -15,10 +15,23 @@ namespace RPG.Inventories
         [Tooltip("Allowed Size")]
         [SerializeField] int m_InventorySize = 16;      //Maximum number of items that can be in the inventory
 
-        InventoryItem[] m_slots;                        //Array which represents the slots in the inventory
+        InventorySlot[] m_slots;                        //Array which represents the slots in the inventory
+
+        public struct InventorySlot                     //Structure that holds the item and the number for the inventory slot
+        {
+            public InventoryItem item;
+            public int number;
+        }
+
+        [System.Serializable]
+        private struct InventorySlotRecord
+        {
+            public string itemID;
+            public int number;
+        }
 
         /// <summary>
-        /// Broadcasts when the items in the slots are added/removed.
+        /// Broadcasts when the inventory has been changed.
         /// </summary>
         public event Action inventoryUpdated;
 
@@ -31,18 +44,18 @@ namespace RPG.Inventories
         public object CaptureState()
         {
             //Create a string array to hold the IDs from the players inventory
-            var slotStrings = new string[m_InventorySize];
+            var state = new InventorySlotRecord[m_InventorySize];
 
             //Loop through players inventory and store the itemID for each item in the inventory
             for (int i = 0; i < m_InventorySize; i++)
             {
-                if (m_slots[i] != null)
+                if (m_slots[i].item != null)
                 {
-                    slotStrings[i] = m_slots[i].GetItemID();
+                    state[i].itemID = m_slots[i].item.GetItemID();
+                    state[i].number = m_slots[i].number;
                 }
             }
-
-            return slotStrings;
+            return state;
         }
 
         /// <summary>
@@ -51,11 +64,12 @@ namespace RPG.Inventories
         /// <param name="state"></param>
         public void RestoreState(object state)
         {
-            var slotStrings = (string[])state;
+            var stateRecords = (InventorySlotRecord[])state;
 
             for (int i = 0; i < m_InventorySize; i++)
             {
-                m_slots[i] = InventoryItem.GetFromID(slotStrings[i]);
+                m_slots[i].item = InventoryItem.GetFromID(stateRecords[i].itemID);
+                m_slots[i].number = stateRecords[i].number;
             }
 
             if (inventoryUpdated!=null)
@@ -69,11 +83,7 @@ namespace RPG.Inventories
         // Start is called before the first frame update
         void Awake()
         {
-            m_slots = new InventoryItem[m_InventorySize];
-            //Set up the slots array.  THIS IS FOR DEBUGGIN. CHANGE UUID.
-            //m_slots[0] = InventoryItem.GetFromID("db4ec621-110b-490f-b18c-7bf427e93c78");
-            //m_slots[1] = InventoryItem.GetFromID("a9d3213f-3ce6-4999-aec9-fcd40c882305");
-            //m_slots[10] = InventoryItem.GetFromID("954f42be-081d-43be-8d77-772c3af5aaaf");
+            m_slots = new InventorySlot[m_InventorySize];
         }
 
 
@@ -83,7 +93,36 @@ namespace RPG.Inventories
         /// <returns>-1 if no slot is found.</returns>
         private int FindSlot(InventoryItem item)
         {
-            return FindEmptySlot();
+            //See if item stack exists
+            int i = FindStack(item);
+
+            //If a stack doesn't exist then find first empty
+            if (i < 0)
+            { 
+                i=FindEmptySlot(); 
+            }
+
+            return i;
+        }
+
+        /// <summary>
+        /// See if a stake of an item exists.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>return -1 if no stake exists</returns>
+        private int FindStack(InventoryItem item)
+        {
+            //Check to see if the item is stackable
+            if (!item.IsStackable()) return -1;
+
+            for (int i = 0; i < m_InventorySize; i++)
+            {
+                if (object.ReferenceEquals(m_slots[i].item, item))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         /// <summary>
@@ -94,7 +133,7 @@ namespace RPG.Inventories
         {
             for (int i = 0; i < m_InventorySize; i++)
             {
-                if (m_slots[i] == null)
+                if (m_slots[i].item == null)
                 {
                     return i;
                 }
@@ -138,9 +177,8 @@ namespace RPG.Inventories
         /// </summary>
         /// <param name="item"></param>
         /// <returns>Whether or not the item could be added.</returns>
-        public bool AddToFirstEmptySlot(InventoryItem item)
+        public bool AddToFirstEmptySlot(InventoryItem item, int number)
         {
-            Debug.Log("Add to first slot");
             //Get empty slot
             int i = FindSlot(item);
 
@@ -148,7 +186,11 @@ namespace RPG.Inventories
             if (i < 0) return false;
 
             //Upate item at specific slot and update inventory
-            m_slots[i] = item;
+            m_slots[i].item = item;
+            m_slots[i].number += number;
+
+            //TODO: Check for max size and handle behavoir
+
             if (inventoryUpdated != null)
             {
                 inventoryUpdated();
@@ -182,16 +224,35 @@ namespace RPG.Inventories
         /// <returns></returns>
         public InventoryItem GetItemInSlot(int slot)
         {
-            return m_slots[slot];
+            return m_slots[slot].item;
+        }
+
+        /// <summary>
+        /// Returns the number of items in the inventory slot
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int GetNumberInSlot(int index)
+        {
+            return m_slots[index].number;
         }
 
         /// <summary>
         /// Remove the item from the given slot.
         /// </summary>
         /// <param name="slot"></param>
-        public void RemoveFromSlot(int slot)
+        public void RemoveFromSlot(int slot, int number)
         {
-            m_slots[slot] = null;
+            //Remove a specific number of the item from the slot
+            m_slots[slot].number -= number;
+
+            //If number if <=0 then clear the slot of the item
+            if (m_slots[slot].number <= 0)
+            {
+                m_slots[slot].item = null;
+                m_slots[slot].number = 0;
+            }
+
             if (inventoryUpdated != null)
             {
                 inventoryUpdated();
@@ -206,14 +267,28 @@ namespace RPG.Inventories
         /// <param name="slot">The slot to attempt to add to.</param>
         /// <param name="item">The item type to add.</param>
         /// <returns>True if the item was added anywhere in the inventory.</returns>
-        public bool AddItemToSlot(int slot, InventoryItem item)
+        public bool AddItemToSlot(int slot, InventoryItem item, int number)
         {
-            if (m_slots[slot] != null)
+            //TODO: Check for max size and handle behavoir
+
+            //IF the slot we are attempt to add to has the item and its stackable then add to that slot.
+            if (object.ReferenceEquals(m_slots[slot].item, item)&& item.IsStackable())
             {
-                return AddToFirstEmptySlot(item);
+                m_slots[slot].number += number;
+                inventoryUpdated();
+                return true;
             }
 
-            m_slots[slot] = item;
+            //if the slot we are trying to add the item too is not null then add to first available
+            //This is for items that do not stack.
+            if (m_slots[slot].item != null)
+            {
+                 return AddToFirstEmptySlot(item,number);
+            }
+
+            //Slot is empty so add the item.
+            m_slots[slot].item = item;
+            m_slots[slot].number += number;
 
             if (inventoryUpdated != null)
             {
@@ -222,5 +297,6 @@ namespace RPG.Inventories
 
             return true;
         }
+
     }
 }

@@ -25,7 +25,7 @@ namespace RPG.Core.UI.Dragging
         /// <param name="number">
         /// This should never exceed the number returned by `GetNumber`.
         /// </param>
-        void RemoveItems(int numnber);
+        void RemoveItems(int number);
         
     }
 }

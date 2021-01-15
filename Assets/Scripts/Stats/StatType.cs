@@ -1,7 +1,10 @@
 ﻿
 namespace RPG.Stats
 {
-    //Stat types that are in the game
+    /// <summary>
+    ///  Stat types that are in the game
+    /// </summary>
+
     public enum StatType
     {
         Health,         //How much physical damage can something take

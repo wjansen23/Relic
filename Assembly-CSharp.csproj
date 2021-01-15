@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Asset Packs\GameDev.tv Assets\Scripts\Utils\LazyValue.cs" />
+    <Compile Include="Assets\Scripts\Actions\ActionItem.cs" />
+    <Compile Include="Assets\Scripts\Actions\ActionStore.cs" />
     <Compile Include="Assets\Scripts\Attributes\Health.cs" />
     <Compile Include="Assets\Scripts\Attributes\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Combat\CharacterCombat.cs" />
@@ -83,6 +85,9 @@
     <Compile Include="Assets\Scripts\Core\IAction.cs" />
     <Compile Include="Assets\Scripts\Core\PersistentObjectsSpawner.cs" />
     <Compile Include="Assets\Scripts\Destroyer.cs" />
+    <Compile Include="Assets\Scripts\Inventories\EquipLocation.cs" />
+    <Compile Include="Assets\Scripts\Inventories\EquipableItem.cs" />
+    <Compile Include="Assets\Scripts\Inventories\Equipment.cs" />
     <Compile Include="Assets\Scripts\Inventories\Inventory.cs" />
     <Compile Include="Assets\Scripts\Inventories\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\Inventories\ItemDropper.cs" />
@@ -106,8 +111,10 @@
     <Compile Include="Assets\Scripts\Stats\IModifierProvider.cs" />
     <Compile Include="Assets\Scripts\Stats\Progression.cs" />
     <Compile Include="Assets\Scripts\Stats\StatType.cs" />
+    <Compile Include="Assets\Scripts\UI\Actions\ActionSlotUI.cs" />
     <Compile Include="Assets\Scripts\UI\DamageText\DamageText.cs" />
     <Compile Include="Assets\Scripts\UI\DamageText\DamageTextSpawner.cs" />
+    <Compile Include="Assets\Scripts\UI\Equipment\EquipmentSlotUI.cs" />
     <Compile Include="Assets\Scripts\UI\Inventories\IItemHolder.cs" />
     <Compile Include="Assets\Scripts\UI\Inventories\InventoryDragItem.cs" />
     <Compile Include="Assets\Scripts\UI\Inventories\InventoryDropTarget.cs" />
@@ -127,7 +134,6 @@
     <Compile Include="Assets\Scripts\Utils\UI\Dragging\IDragContainer.cs" />
     <Compile Include="Assets\Scripts\Utils\UI\Dragging\IDragDestination.cs" />
     <Compile Include="Assets\Scripts\Utils\UI\Dragging\IDragSource.cs" />
-    <None Include="Assets\Asset Packs\FreeWeapons\Read_me.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

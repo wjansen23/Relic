@@ -26,7 +26,7 @@ namespace RPG.Inventories
         [Tooltip("The prefab that is spawned when the item is dropped")]
         [SerializeField] Pickup m_Pickup = null;
         [Tooltip("How many inventory slots does it require")]
-        [SerializeField] int m_InventorySlotsUsed = 1;
+        [SerializeField] int m_MaxPerSlot = 50;
         [Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")]
         [SerializeField] bool m_Stackable = false;
 
@@ -153,14 +153,32 @@ namespace RPG.Inventories
         /// </summary>
         /// <param name="position">Where to spawn</param>
         /// <returns>Reference to spawned pickup</returns>
-        public Pickup SpawnPickup(Vector3 position)
+        public Pickup SpawnPickup(Vector3 position, int number)
         {
             var pickup = Instantiate(this.m_Pickup);
 
             //Set position and steup the pickup before returning.
             pickup.transform.position = position;
-            pickup.Setup(this);
+            pickup.Setup(this,number);
             return pickup;
+        }
+
+        /// <summary>
+        /// Returns whether an inventory item is stackable.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStackable()
+        {
+            return m_Stackable;
+        }
+
+        /// <summary>
+        /// Returns the maximum number of an item for a inventory slot
+        /// </summary>
+        /// <returns></returns>
+        public int MaxItemsPerSlot()
+        {
+            return m_MaxPerSlot;
         }
 
     }

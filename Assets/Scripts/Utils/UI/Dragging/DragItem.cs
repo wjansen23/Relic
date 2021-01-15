@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using RPG.Control;
+using static UnityEngine.EventSystems.PointerEventData;
 
 namespace RPG.Core.UI.Dragging
 {
@@ -88,7 +89,7 @@ namespace RPG.Core.UI.Dragging
             //We found a drag destination then remove item from source and add to destination
             if (container != null)
             {
-                DropItemIntoContainer(container);
+                DropItemIntoContainer(container,eventData.button);
             }
 
             //Get the player controller and disable
@@ -122,7 +123,7 @@ namespace RPG.Core.UI.Dragging
             return null;
         }
 
-        private void DropItemIntoContainer(IDragDestination<T> destination)
+        private void DropItemIntoContainer(IDragDestination<T> destination, InputButton button)
         {
             //check if destination is the same as source.  If so, do nothing and return
             if (object.ReferenceEquals(destination, m_source)) return;
@@ -137,7 +138,7 @@ namespace RPG.Core.UI.Dragging
             if (destinationContainer == null || sourceContainer == null || destinationContainer.GetItem() == null || object.ReferenceEquals(destinationContainer.GetItem(), sourceContainer.GetItem()))
             {
                 //Can't swap but try to move item from source to destination.
-                AttemptSimpleTransfer(destination);
+                AttemptSimpleTransfer(destination, button);
                 return;
             }
 
@@ -149,14 +150,24 @@ namespace RPG.Core.UI.Dragging
         /// </summary>
         /// <param name="destination"></param>
         /// <returns></returns>
-        private bool AttemptSimpleTransfer(IDragDestination<T> destination)
+        private bool AttemptSimpleTransfer(IDragDestination<T> destination,InputButton button)
         {
             //Get the current item and number from the source container
             var draggingItem = m_source.GetItem();
-            var draggingNumber = m_source.GetNumber();
+            var draggingNumber = 0;
+            var maxCanReceive = destination.MaxAcceptable(draggingItem);
+
+            if (button == InputButton.Left)
+            {
+                draggingNumber = m_source.GetNumber();
+            }
+            else
+            {
+                draggingNumber = 1;
+            }
 
             //Determine how many of the item can be transfered based on the destination container
-            var maxCanReceive = destination.MaxAcceptable(draggingItem);
+            //var maxCanReceive = destination.MaxAcceptable(draggingItem);
             var numToTransfer = Mathf.Min(maxCanReceive, draggingNumber);
 
             //If there are items to be transfered, descrease count in source and add # of items to destination.

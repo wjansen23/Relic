@@ -6,7 +6,7 @@ namespace RPG.Core.UI.Dragging
     /// Components that implement this interfaces can act as the destination for a `DragItem`.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IDragDestination<T> where T:class
+    public interface IDragDestination<T> where T : class
     {
         /// <summary>
         /// How many of the given item can be accepted.
@@ -21,6 +21,5 @@ namespace RPG.Core.UI.Dragging
         /// <param name="item">The item type</param>
         /// <param name="number">The quantity of items.</param>
         void AddItems(T item, int number);
-
     }
 }
