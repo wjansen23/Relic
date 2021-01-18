@@ -12,6 +12,8 @@ namespace RPG.Inventories
         [SerializeField] InventoryItem m_Item = null;       //Reference to the Pickup item the spawner spawns
         [SerializeField] int m_Number = 1;                  //Number of the item to spawn
 
+        bool m_WasCollected = false;
+
         ///////////////////////////// INTERFACES //////////////////////////////////////////// 
         
         /// <summary>
@@ -29,16 +31,17 @@ namespace RPG.Inventories
         /// <param name="state"></param>
         public void RestoreState(object state)
         {
-            //Get whether the object collected or not
-            bool wasCollected = (bool)state;
+            //Get whether the object collected or not and store in class variable
+            //bool wasCollected = (bool)state;
+            m_WasCollected = (bool)state;
 
             //Now compare the save state to the current state and either spawn or destroy the pickup
-            if (wasCollected && !IsCollected())
+            if (m_WasCollected && !IsCollected())
             {
                 DestroyPickup();
             }
 
-            if (!wasCollected && IsCollected())
+            if (!m_WasCollected && IsCollected())
             {
                 SpawnPickup();
             }
@@ -46,12 +49,20 @@ namespace RPG.Inventories
 
 
         ///////////////////////////// PRIVATE METHODS //////////////////////////////////////////// 
-        
+
 
         // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
-            SpawnPickup();
+            if (!m_WasCollected)
+            {
+                SpawnPickup();
+            }
+        }
+
+        private void Start()
+        {
+
         }
 
         /// <summary>
@@ -92,6 +103,19 @@ namespace RPG.Inventories
         public bool IsCollected()
         {
             return GetPickup() == null;
+        }
+
+
+        /// <summary>
+        /// Returns whether the pickup was collected.  
+        /// 
+        /// This for instances where IsCollected is not sufficient to check if pickup was taken during
+        /// the loading of a save game on game start.
+        /// </summary>
+        /// <returns></returns>
+        public bool WasCollected()
+        {
+            return m_WasCollected;
         }
     }
 }

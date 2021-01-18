@@ -8,6 +8,9 @@ using UnityEngine.AI;
 
 namespace RPG.Control
 {
+    /// <summary>
+    /// This class handles all player controls and actions
+    /// </summary>
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] float m_MaxNavMeshProjDist = 1f;   //The distance to search for a nav mesh point for a ray cast
@@ -15,6 +18,7 @@ namespace RPG.Control
         CharacterMovement m_Mover;                      //Reference to character movement for the Player
         CharacterCombat m_Combat;                       //Reference to character combat for the player
         Health m_Health;                                //Reference to health component;
+        bool m_DraggingUI = false;                      //Are we dragging a UI component
 
         //This structure holds the mapping of cursor images to cursor types
         [System.Serializable]
@@ -35,7 +39,11 @@ namespace RPG.Control
             m_Health = GetComponent<Health>();
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Update is called once per frame. 
+        /// Performs a series of checks against different actions the player can take
+        /// </summary>
+
         void Update()
         {
             //Check if over ui element
@@ -61,19 +69,40 @@ namespace RPG.Control
             SetCursor(CursorType.None);
         }
 
-        //This routine handles the player interacting with the UI
+        /// <summary>
+        /// This routine handles the player interacting with the UI 
+        /// </summary>
+        /// <returns></returns>
         private bool InteractWithUI()
         {
+            if (Input.GetMouseButtonUp(0)||Input.GetMouseButtonUp(1))
+            {
+                m_DraggingUI = false;
+            }
+
             //Is the mouse over a UI gameobject
             if (EventSystem.current.IsPointerOverGameObject())
             {
+                if (Input.GetMouseButtonDown(0)||Input.GetMouseButtonDown(1))
+                {
+                    m_DraggingUI = true;
+                }
                 SetCursor(CursorType.UI);
                 return true;
             }
+
+            if (m_DraggingUI)
+            {
+                return true;
+            }
+
             return false;
         }
 
-        //Handles interacting with components
+        /// <summary>
+        /// Handles interacting with components and world objcts that can be interacted with
+        /// </summary>
+        /// <returns></returns>
         private bool InteractWithComponent()
         {
             //Get a list of all hits from the raycast
@@ -94,8 +123,11 @@ namespace RPG.Control
             return false;
         }
 
-        //This routine handles combat for the player.
-        //Returns true if mouse is hovering over a combat target
+        /// <summary>
+        /// This routine handles combat for the player.
+        /// Returns true if mouse is hovering over a combat target
+        /// </summary>
+        /// <returns></returns>
         private bool InteractWithCombat()
         {
             //Get a list of all hits from the raycast
@@ -116,7 +148,10 @@ namespace RPG.Control
             return false;
         }
 
-        //This routine handles movement for the player.
+        /// <summary>
+        /// This routine handles movement for the player.
+        /// </summary>
+        /// <returns></returns>
         private bool InteractWithMovement()
         {
             // RaycastHit rayHit;
@@ -132,7 +167,7 @@ namespace RPG.Control
                 //Check to see if we can move to target
                 if (!m_Mover.CanMoveTo(moveLocation)) return false;
 
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButton(1))
                 {
                     //Move to destination
                     m_Mover.StartMoveAction(moveLocation);
@@ -143,7 +178,11 @@ namespace RPG.Control
             return false;
         }
 
-        //Check to see if the ray cast hits the Nav Mesh and return where it does
+        /// <summary>
+        /// Check to see if the ray cast hits the Nav Mesh and return where it does
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         private bool RaycastNavMesh(out Vector3 location)
         {
             //Set default value for out variable
@@ -169,14 +208,21 @@ namespace RPG.Control
             return true;
         }
 
-        //Handles changing the type of curosr that is displayed.
+        /// <summary>
+        /// Handles changing the type of curosr that is displayed.
+        /// </summary>
+        /// <param name="type"></param>
         private void SetCursor(CursorType type)
         {
             CursorMapping cursormap = GetCursorMapping(type);
             Cursor.SetCursor(cursormap.image, cursormap.hotspot,CursorMode.Auto);
         }
 
-        //Return curosrmap for sent cursortype
+        /// <summary>
+        /// Return curosrmap for sent cursortype
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private CursorMapping GetCursorMapping(CursorType type)
         {
             foreach(CursorMapping item in m_cursorMap)
@@ -191,13 +237,19 @@ namespace RPG.Control
             return m_cursorMap[0];
         }
 
-        //Create a raycast based in the mouse position.
+        /// <summary>
+        /// Create a raycast based in the mouse position.
+        /// </summary>
+        /// <returns></returns>
         private static Ray GetMouseRay()
         {
             return Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
-        //Sort the received hits by their distance to the player
+        /// <summary>
+        /// Sort the received hits by their distance to the player
+        /// </summary>
+        /// <returns></returns>
         private RaycastHit[] RaycastAllSorted()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());

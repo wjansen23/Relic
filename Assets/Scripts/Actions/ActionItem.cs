@@ -9,7 +9,7 @@ namespace RPG.Inventories
     /// This class should be used as a base. Subclasses must implement the `Use`
     /// method.
     /// </remarks>
-    [CreateAssetMenu(menuName = "Inventory/Action Item")]
+    [CreateAssetMenu(menuName = "Inventory/New Action Item")]
     public class ActionItem : InventoryItem
     {
         [Tooltip("Does an instance of this item get consumed every time it's used.")]

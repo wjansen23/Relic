@@ -45,8 +45,8 @@ namespace RPG.Core.UI.Dragging
             transform.SetParent(m_parentCanvas.transform, true);
 
             //Get the player controller and disable
-            PlayerController PlayerControlComp = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            PlayerControlComp.enabled = false;
+            //PlayerController PlayerControlComp = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            //PlayerControlComp.enabled = false;
         }
 
         /// <summary>
@@ -93,8 +93,8 @@ namespace RPG.Core.UI.Dragging
             }
 
             //Get the player controller and disable
-            PlayerController PlayerControlComp = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            PlayerControlComp.enabled = true;
+            //PlayerController PlayerControlComp = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            //PlayerControlComp.enabled = true;
         }
 
         ///////////////////////////// PRIVATE METHODS //////////////////////////////////////////// 

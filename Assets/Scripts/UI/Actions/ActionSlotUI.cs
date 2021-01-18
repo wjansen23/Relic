@@ -20,25 +20,45 @@ namespace RPG.UI.Inventories
 
         ///////////////////////////// INTERFACES //////////////////////////////////////////// 
         
+        /// <summary>
+        /// Adds items to the action slot
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="number"></param>
         public void AddItems(InventoryItem item, int number)
         {
             m_PlayerActionStore.AddAction(item, m_ActionSlot, number);
         }
 
+        /// <summary>
+        /// Returns the action item stored in the slot
+        /// </summary>
+        /// <returns></returns>
         public InventoryItem GetItem()
         {
             return m_PlayerActionStore.GetAction(m_ActionSlot);
         }
 
+        /// <summary>
+        /// Returns the number of items in the action slot
+        /// </summary>
+        /// <returns></returns>
         public int GetNumber()
         {
             return m_PlayerActionStore.GetConsumableNumber(m_ActionSlot);
         }
 
+        /// <summary>
+        /// Returns the maximum number of items the slot can accept
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public int MaxAcceptable(InventoryItem item)
         {
             var actionTemp = item as ActionItem;
             int maxAccept = 0;
+
+            if (actionTemp == null) return 0;
 
             if (actionTemp.IsConsumable() == true)
             {
@@ -55,6 +75,10 @@ namespace RPG.UI.Inventories
             return maxAccept;            
         }
 
+        /// <summary>
+        /// Removes items from the slot
+        /// </summary>
+        /// <param name="number"></param>
         public void RemoveItems(int number)
         {
             m_PlayerActionStore.RemoveItems(m_ActionSlot, number);

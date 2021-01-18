@@ -57,10 +57,19 @@ namespace RPG.Control
         /// <param name="other"></param>
         private void OnTriggerEnter(Collider other)
         {
+            //Get reference to pickup spawner
+            PickupSpawner spawner = GetComponentInParent<PickupSpawner>();
+
             //Make sure that the player entered the collider. If so, then pickup
             if (other.gameObject.tag == "Player")
             {
-                m_Pickup.PickupItem();
+                //This check is required given that if the player quits the game at the spot of a
+                //runover pickup and then restarts the game they pickup the item again.  This does
+                //not happen if the player reloads while playing only on game start.
+                if (!spawner.WasCollected())
+                {
+                    m_Pickup.PickupItem();
+                }
             }
         }
     }
