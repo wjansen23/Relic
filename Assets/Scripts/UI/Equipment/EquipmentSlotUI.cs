@@ -15,7 +15,7 @@ namespace RPG.UI.Inventories
         [SerializeField] InventoryItemIcon m_Icon = null;                       //Reference to inventory icon
         [SerializeField] EquipLocation m_EquipLocation = EquipLocation.Weapon;  //What type of equipment does it represent
 
-        Equipment m_PlayerEquipment;        //Reference to the players equippment
+        Equipment m_PlayerEquipment;                                            //Reference to the players equippment
 
         ///////////////////////////// INTERFACES //////////////////////////////////////////// 
 

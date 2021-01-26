@@ -33,6 +33,10 @@ PrefabInstance:
       value: Character_Skeleton_Soldier_01
       objectReference: {fileID: 0}
     - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -45,6 +49,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -54,14 +62,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 476532, guid: 2ea27af6ead886c4d93bb53d28c6c25b, type: 3}
@@ -99,15 +99,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 936712650039148332, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
-      propertyPath: m_WeaponHandTransform
-      value: 
-      objectReference: {fileID: 4282066626724925617}
-    - target: {fileID: 936712650039148332, guid: fe7176e62342e37409ac7d63c7d13d21,
-        type: 3}
       propertyPath: m_Weapon
       value: 
       objectReference: {fileID: 11400000, guid: 0bf37b949ac501e468c412776d41f8c3,
         type: 2}
+    - target: {fileID: 936712650039148332, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 2adc3957645d70441946f3f28ff6d752,
+        type: 2}
+    - target: {fileID: 936712650039148332, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_WeaponHandTransform
+      value: 
+      objectReference: {fileID: 4282066626724925617}
     - target: {fileID: 936712650039148332, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
       propertyPath: m_WeaponLeftHandTransform
@@ -118,20 +124,14 @@ PrefabInstance:
       propertyPath: m_WeaponRightHandTransform
       value: 
       objectReference: {fileID: 4282066626724925617}
-    - target: {fileID: 936712650039148332, guid: fe7176e62342e37409ac7d63c7d13d21,
-        type: 3}
-      propertyPath: m_defaultWeapon
-      value: 
-      objectReference: {fileID: 11400000, guid: 2adc3957645d70441946f3f28ff6d752,
-        type: 2}
     - target: {fileID: 1164607052840369955, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
       propertyPath: m_Name
       value: Skeleton_Grey
       objectReference: {fileID: 0}
-    - target: {fileID: 5470404812408040227, guid: fe7176e62342e37409ac7d63c7d13d21,
+    - target: {fileID: 4052617943021672197, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
-      propertyPath: m_CharacterClass
+      propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5470404812408040227, guid: fe7176e62342e37409ac7d63c7d13d21,
@@ -140,6 +140,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 1fa0021a39d986846bf3c54892f9871c,
         type: 2}
+    - target: {fileID: 5470404812408040227, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_CharacterClass
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530350803856695989, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915054122057948398, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_DropDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915054122057948398, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_LootDropTable
+      value: 
+      objectReference: {fileID: 11400000, guid: 3bbd1e95a51a0884bb57a979dc6b24f0,
+        type: 2}
+    - target: {fileID: 8169535480517979624, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8285591896176321128, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
       propertyPath: m_Avatar
@@ -150,6 +176,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: de954840015668247b31e3286ac4cd93, type: 2}
+    - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -167,6 +198,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -178,16 +214,6 @@ PrefabInstance:
     - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8430917169174726125, guid: fe7176e62342e37409ac7d63c7d13d21,
@@ -233,6 +259,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5560686345049683639, guid: ea9af4bafbc05fe459e7a6739494868a,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560686345049683639, guid: ea9af4bafbc05fe459e7a6739494868a,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -248,6 +279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5560686345049683639, guid: ea9af4bafbc05fe459e7a6739494868a,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560686345049683639, guid: ea9af4bafbc05fe459e7a6739494868a,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -260,16 +296,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5560686345049683639, guid: ea9af4bafbc05fe459e7a6739494868a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5560686345049683639, guid: ea9af4bafbc05fe459e7a6739494868a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5560686345049683639, guid: ea9af4bafbc05fe459e7a6739494868a,
         type: 3}

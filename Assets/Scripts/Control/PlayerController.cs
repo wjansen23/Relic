@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using RPG.Movement;
-using RPG.Combat;
-using RPG.Attributes;
-using System;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
+using System;
+using RPG.Movement;
+//using RPG.Combat;
+using RPG.Attributes;
+using RPG.Inventories;
 
 namespace RPG.Control
 {
@@ -15,10 +16,15 @@ namespace RPG.Control
     {
         [SerializeField] float m_MaxNavMeshProjDist = 1f;   //The distance to search for a nav mesh point for a ray cast
 
-        CharacterMovement m_Mover;                      //Reference to character movement for the Player
-        CharacterCombat m_Combat;                       //Reference to character combat for the player
-        Health m_Health;                                //Reference to health component;
-        bool m_DraggingUI = false;                      //Are we dragging a UI component
+        CharacterMovement m_Mover;                          //Reference to character movement for the Player
+        //CharacterCombat m_Combat;                         //Reference to character combat for the player
+        Health m_Health;                                    //Reference to health component
+        ActionStore m_Actions;                              //Reference to actions component
+        Abilities m_Abilities;                              //Reference to abilities component
+        GameObject m_HoverTarget = null;                    //What the cursor is hovering over.
+
+        bool m_DraggingUI = false;                          //Are we dragging a UI component
+
 
         //This structure holds the mapping of cursor images to cursor types
         [System.Serializable]
@@ -35,8 +41,10 @@ namespace RPG.Control
         void Awake()
         {
             m_Mover = GetComponent<CharacterMovement>();
-            m_Combat = GetComponent<CharacterCombat>();
+            //m_Combat = GetComponent<CharacterCombat>();
             m_Health = GetComponent<Health>();
+            m_Actions = GetComponent<ActionStore>();
+            m_Abilities = GetComponent<Abilities>();
         }
 
         /// <summary>
@@ -60,13 +68,105 @@ namespace RPG.Control
                 return;
             }
 
-            if (InteractWithComponent()) return;
+            if (InteractWithAbilities()) return;
+            if (InteractWithWorld()) return;
 
             //Check Potential Behavoirs
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
 
             SetCursor(CursorType.None);
+        }
+
+        /// <summary>
+        /// Handles when the user selects an item from the action bar.
+        /// </summary>
+        /// <returns></returns>
+        private bool InteractWithAbilities()
+        {
+            int index = -1;
+
+            //Make sure there is an action store and abilities
+            if (m_Actions == null) return false;
+            if (m_Abilities == null) return false;
+
+            //Find out which key the user selected and set the appropriate index value
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                index = 0;
+            }else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                index = 1;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                index = 2;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                index = 3;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                index = 4;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                index = 5;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                index = 6;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                index = 7;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                index = 8;
+            }
+
+            //Debug.Log("You pressed " + index+1);
+            //Did the user select an action or an ability.
+            if (index > 6)
+            {
+                return m_Actions.UseItem(index, gameObject);
+            }
+            else
+            {
+                //Check if there is an ability slotted in the action bar
+                var abilityslotted = m_Actions.GetAction(index) as AbilityItem;
+                if (abilityslotted == null) return false;
+
+                //Get a list of all hits from the raycast
+                RaycastHit[] rayHits = RaycastAllSorted();
+
+                //Loop through the list of hits
+                foreach (RaycastHit hit in rayHits)
+                {
+                    //Get all castable components from the hit
+                    IRayCastable[] raycastables = hit.transform.GetComponents<IRayCastable>();
+                    foreach (IRayCastable item in raycastables)
+                    {
+                        //Is the castable a valid target for abilities
+                        if (item.HandleRaycast(this))
+                        {
+                            //Attemp to use the ability
+                            if (abilityslotted.Use(gameObject, hit.transform))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                SetCursor(CursorType.None);
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
         }
 
         /// <summary>
@@ -103,7 +203,7 @@ namespace RPG.Control
         /// Handles interacting with components and world objcts that can be interacted with
         /// </summary>
         /// <returns></returns>
-        private bool InteractWithComponent()
+        private bool InteractWithWorld()
         {
             //Get a list of all hits from the raycast
             RaycastHit[] rayHits = RaycastAllSorted();

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db108d4cb5de85f42965aa43807bcec3, type: 3}
+  m_Name: Ability Test (FireBall)
+  m_EditorClassIdentifier: 
+  m_ItemID: 06812d98-7748-45a1-9cac-4558640decbc
+  m_DisplayName: Fireball
+  m_Description: 
+  m_Icon: {fileID: 21300000, guid: c289b67aac6646a46ba5acdcdfbf2ecf, type: 3}
+  m_Pickup: {fileID: 0}
+  m_MaxPerSlot: 1
+  m_Stackable: 0
+  m_Consumable: 0
+  m_OnPlayer: 0
+  m_DamageType: 5
+  m_CostType: 2
+  m_CostValue: 25
+  m_Duration: 0
+  m_Range: 15
+  m_CoolDown: 3
+  m_WeaponConfig: {fileID: 11400000, guid: 4a1aa05389a63ca4aa77b66c0e15b1ec, type: 2}

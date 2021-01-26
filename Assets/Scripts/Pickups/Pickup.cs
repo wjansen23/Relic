@@ -50,6 +50,10 @@ namespace RPG.Inventories
             bool wasAdded = m_PlayerInventory.AddToFirstEmptySlot(m_Item,m_Number);
             if (wasAdded)
             {
+                //Get reference to pickup spawner is it exists and tell it the pick has been collected
+                PickupSpawner spawner = GetComponentInParent<PickupSpawner>();
+                if (spawner != null) spawner.WasCollected(true);
+
                 Destroy(gameObject);
             }
         }

@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6332a2571158f40949def2cf450b26, type: 3}
   m_Name: WolfBite
   m_EditorClassIdentifier: 
+  m_ItemID: 2de806b0-34e6-451e-af3c-37c0777afd42
+  m_DisplayName: Wolf Bite
+  m_Description: 
+  m_Icon: {fileID: 0}
+  m_Pickup: {fileID: 0}
+  m_MaxPerSlot: 50
+  m_Stackable: 0
+  m_EquipLocation: 6
   m_weaponAOC: {fileID: 0}
   m_equippedPrefab: {fileID: 0}
   m_weaponRange: 2

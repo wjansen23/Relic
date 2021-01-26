@@ -45,6 +45,7 @@ namespace RPG.UI.Inventories
         /// <returns></returns>
         public int GetNumber()
         {
+            //Debug.Log(m_ActionSlot);
             return m_PlayerActionStore.GetConsumableNumber(m_ActionSlot);
         }
 

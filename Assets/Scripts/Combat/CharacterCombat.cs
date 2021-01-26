@@ -5,8 +5,8 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Attributes;
 using RPG.Stats;
-using System.Collections.Generic;
-using System;
+using RPG.Inventories;
+
 
 namespace RPG.Combat
 {
@@ -14,7 +14,7 @@ namespace RPG.Combat
     /// <summary>
     /// This class is responsible for enable a character to engage in combat within the game
     /// </summary>
-    public class CharacterCombat : MonoBehaviour, IAction, ISaveable,IModifierProvider
+    public class CharacterCombat : MonoBehaviour, IAction, ISaveable
     {
 
         [SerializeField] float m_timeBetweenAttacks = 2f;               //How long the between attacks
@@ -29,10 +29,8 @@ namespace RPG.Combat
         CharacterMovement m_Mover;                              //Reference to the character movement component
         Health m_Target;                                        //Reference to The targets the character is currently attacking
         WeaponConfig m_currentWeaponConfig;                     //Config for the Weapon currently equipped. Lazy Value is a wrapper class to ensure initialization befor use.
-        LazyValue<Weapon> m_currentWeapon;                                 //Reference to weapon objectect
-
-
-
+        LazyValue<Weapon> m_currentWeapon;                      //Reference to weapon objectect
+        Equipment m_Equipment;                                  //Reference to the Equipment component
 
 
         ///////////////////////////// INTERFACE METHODS ////////////////////////////////////////////
@@ -69,34 +67,34 @@ namespace RPG.Combat
             EquipWeapon(weapon);
         }
 
-        //IModifierProvider
-        /// <summary>
-        /// Returns additive stat modifiers
-        /// </summary>
-        /// <param name="reqStat"></param>
-        /// <returns></returns>
-        public IEnumerable<float> GetStatAdditiveModifiers(StatType reqStat)
-        {
-            //This is an example.  Combat will not return any stat modifiers for damage
-            if (reqStat == StatType.PhysicalDamage)
-            {
-                yield return 0;
-            }
-        }
+        ////IModifierProvider
+        ///// <summary>
+        ///// Returns additive stat modifiers
+        ///// </summary>
+        ///// <param name="reqStat"></param>
+        ///// <returns></returns>
+        //public IEnumerable<float> GetStatAdditiveModifiers(StatType reqStat)
+        //{
+        //    //This is an example.  Combat will not return any stat modifiers for damage
+        //    if (reqStat == StatType.PhysicalDamage)
+        //    {
+        //        yield return 0;
+        //    }
+        //}
 
-        /// <summary>
-        /// Returns multiplicative stat modifiers
-        /// </summary>
-        /// <param name="reqStat"></param>
-        /// <returns></returns>
-        public IEnumerable<float> GetStatPercentageModifiers(StatType reqStat)
-        {
-            //This is an example.  Combat will not return any stat modifiers for damage
-            if (reqStat == StatType.PhysicalDamage)
-            {
-                yield return 0;
-            }
-        }
+        ///// <summary>
+        ///// Returns multiplicative stat modifiers
+        ///// </summary>
+        ///// <param name="reqStat"></param>
+        ///// <returns></returns>
+        //public IEnumerable<float> GetStatPercentageModifiers(StatType reqStat)
+        //{
+        //    //This is an example.  Combat will not return any stat modifiers for damage
+        //    if (reqStat == StatType.PhysicalDamage)
+        //    {
+        //        yield return 0;
+        //    }
+        //}
 
         ///////////////////////////// PRIVATE METHODS ////////////////////////////////////////////
 
@@ -109,6 +107,13 @@ namespace RPG.Combat
 
             m_currentWeaponConfig = m_defaultWeapon;
             m_currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+            m_Equipment = GetComponent<Equipment>();
+
+            //Check if character has an equipment component.  If so, register for updates.
+            if (m_Equipment)
+            {
+                m_Equipment.equipmentUpdated += UpdateWeapon;
+            }
         }
 
         /// <summary>
@@ -185,12 +190,26 @@ namespace RPG.Combat
         {
             //If we have lost the target then just return.  Can happen when canceling an attack prior to hit event.
             if (m_Target == null) return;
+            float totalDamage = 0;
 
-            //Compute amount of damage done by type
-            float charDamage = GetComponent<BaseStats>().GetStat(StatType.PhysicalDamage);
-            float wepDamage = m_currentWeaponConfig.GetWeaponDamage();
+            ////Check to see if this character has equipment slots
+            //var statEquipComp = GetComponent<StatsEquipment>();
 
-            float totalDamage = charDamage + wepDamage;
+            //if (statEquipComp == null)
+            //{
+                //Damage the character does regardless of weapon
+                float charDamage = GetComponent<BaseStats>().GetStat(StatType.PhysicalDamage);
+
+                //Enemies don't have equipments slots so just grab the damage from their weapon since
+                //Get Stat will not account for it.
+                float wepDamage = m_currentWeaponConfig.GetWeaponDamage();
+                totalDamage = charDamage + wepDamage;
+            //}
+            //else
+            //{
+            //    //Damage character does to include modifiers based on equipped weapons.
+            //    totalDamage = GetComponent<BaseStats>().GetStat(StatType.PhysicalDamage);
+            //}
 
             //Invoke weapon hit mechanics
             if (m_currentWeapon.value != null)
@@ -251,6 +270,24 @@ namespace RPG.Combat
             return weapon.Spawn(m_WeaponRightHandTransform, m_WeaponLeftHandTransform, animator);
         }
 
+        /// <summary>
+        /// Updates the characters weapon based upon changes in equipment
+        /// </summary>
+        private void UpdateWeapon()
+        {
+            var equipedweapon = m_Equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;
+
+            //If the weapon is null then use default weapon.
+            if (equipedweapon == null)
+            {
+                EquipWeapon(m_defaultWeapon);
+            }
+            else
+            {
+                EquipWeapon(equipedweapon);
+            }
+        }
+
         ///////////////////////////// PUBLIC METHODS ////////////////////////////////////////////        
 
         /// <summary>
@@ -303,6 +340,16 @@ namespace RPG.Combat
             //Update current weapon
             m_currentWeaponConfig = weapon;
             m_currentWeapon.value = AttachWeaponToCharacter(weapon);
+        }
+
+        public Transform GetRightHand()
+        {
+            return m_WeaponRightHandTransform;
+        }
+
+        public Transform GetLeftHand()
+        {
+            return m_WeaponRightHandTransform;
         }
     }
 }

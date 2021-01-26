@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using GameDevTV.Utils;
 using RPG.Saving;
 using RPG.Stats;
 using RPG.Core;
-using UnityEngine.Events;
+
 
 namespace RPG.Attributes
 {
@@ -17,6 +18,7 @@ namespace RPG.Attributes
         BaseStats m_BaseStats = null;                   //Reference to base stats component
 
         bool m_IsDead = false;                          //Boolean to indicate whether the character or object is dead
+        float m_TimeSinceLastRegen = 0;                 //Timer for tracking passive health regeneration
 
 
         [System.Serializable]
@@ -50,6 +52,9 @@ namespace RPG.Attributes
 
             //Get initial health via lazy value.  Must register the method you want called for getting the value
             m_CurrentHealth = new LazyValue<float>(GetInitialHealth);
+
+            //set timers
+            m_TimeSinceLastRegen = Mathf.Infinity;
         }
 
 
@@ -120,6 +125,12 @@ namespace RPG.Attributes
             xpComp.gainXP(m_BaseStats.GetStat(StatType.XpReward));
         }
 
+        //Update all timers
+        private void UpdateTimers()
+        {
+            m_TimeSinceLastRegen += Time.deltaTime;
+        }
+
 
         ///////////////////////////// PUBLIC METHODS ////////////////////////////////////////////        
 
@@ -159,6 +170,16 @@ namespace RPG.Attributes
             //Ensure we don't accidently go above the level maximum health
             m_CurrentHealth.value = Mathf.Min(maxLvlHP, m_CurrentHealth.value + healing);
             //Debug.Log("Health-HealDamage: " + maxLvlHP + ":" + healing);
+        }
+
+        /// <summary>
+        /// Decreases the health of a the character or object
+        /// </summary>
+        /// <param name="healing"></param>
+        public void LossHealth(float healing)
+        {
+            //Ensure we don't accidently go above below 0
+            m_CurrentHealth.value = Mathf.Max(0, m_CurrentHealth.value - healing);
         }
 
         /// <summary>

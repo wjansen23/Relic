@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6332a2571158f40949def2cf450b26, type: 3}
   m_Name: Unarmed
   m_EditorClassIdentifier: 
+  m_ItemID: 2faa8d5d-d64d-489a-9e35-a63b4c115916
+  m_DisplayName: Unarmed
+  m_Description: 
+  m_Icon: {fileID: 0}
+  m_Pickup: {fileID: 0}
+  m_MaxPerSlot: 50
+  m_Stackable: 0
+  m_EquipLocation: 6
   m_weaponAOC: {fileID: 0}
   m_equippedPrefab: {fileID: 3088847065436421976, guid: ceba70c5ee5825d44b65af5246f2f640,
     type: 3}

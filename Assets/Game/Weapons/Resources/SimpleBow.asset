@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6332a2571158f40949def2cf450b26, type: 3}
   m_Name: SimpleBow
   m_EditorClassIdentifier: 
+  m_ItemID: c01b6275-8b6a-4c61-a949-007521907847
+  m_DisplayName: Simple Bow
+  m_Description: A simple bow made of wood.
+  m_Icon: {fileID: 21300000, guid: 37967dc110c38fa438adb4cf1319b92c, type: 3}
+  m_Pickup: {fileID: 4624694418061789577, guid: da8e8d54aa658c440859e9208f2006db,
+    type: 3}
+  m_MaxPerSlot: 50
+  m_Stackable: 0
+  m_EquipLocation: 6
   m_weaponAOC: {fileID: 22100000, guid: 3276d3c7fd3a7f045845d57b101076f3, type: 2}
   m_equippedPrefab: {fileID: 8658509886217159958, guid: 7c42357f3f4a90d45809e55c335b909f,
     type: 3}

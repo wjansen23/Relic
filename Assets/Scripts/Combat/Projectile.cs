@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RPG.Attributes;
 using RPG.Stats;
+using RPG.Inventories;
 using UnityEngine.Events;
 
 namespace RPG.Combat
@@ -16,8 +17,8 @@ namespace RPG.Combat
         [SerializeField] UnityEvent m_OnHitEvent;               //Event for when the projectile hits an object
 
         Health m_Target = null;                     //What is the projectile fired at
-        float m_weaponDamage = 0;                   //Damage projectiles does on based on weapon
-        float m_CharacterDamage = 0;                //Additional damage done by the projectile due to character attributes
+        float m_weaponDamage = 0;                   //Damage projectiles does on based on weapon config. 
+        //float m_CharacterDamage = 0;              //Additional damage done by the projectile due to character attributes
         GameObject m_Wielder = null;                //Hold a reference to the object that fired the projectile
 
         private void Start()
@@ -26,7 +27,9 @@ namespace RPG.Combat
             transform.LookAt(GetAimLocation());
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
         void Update()
         {
             //Protect against null
@@ -38,7 +41,10 @@ namespace RPG.Combat
             //Move projectile
             transform.Translate(Vector3.forward * m_Speed * Time.deltaTime);
         }
-        //Calculates the location where the projectile is going to on the target
+        /// <summary>
+        /// Calculates the location where the projectile is going to on the target
+        /// </summary>
+        /// <returns></returns>
         private Vector3 GetAimLocation()
         {
             CapsuleCollider targetHitBox = m_Target.GetComponent<CapsuleCollider>();
@@ -54,7 +60,10 @@ namespace RPG.Combat
             }
         }
 
-        //See if projectile impacts target, if so do damage
+        /// <summary>
+        /// See if projectile impacts target, if so do damage
+        /// </summary>
+        /// <param name="other"></param>
         private void OnTriggerEnter(Collider other)
         {
             //Check to see if hit the target
@@ -62,7 +71,10 @@ namespace RPG.Combat
 
             //Check if target is dead
             if (m_Target.IsDead()) return;
-            m_Target.TakeDamage(m_Wielder, m_weaponDamage + m_CharacterDamage);
+            m_Target.TakeDamage(m_Wielder, m_weaponDamage);
+            //m_Target.TakeDamage(m_Wielder, m_weaponDamage + m_CharacterDamage);
+
+            Debug.Log(m_Target + "::" + m_weaponDamage);
 
             //Set speed to zero upon impact
             m_Speed = 0;
@@ -87,16 +99,33 @@ namespace RPG.Combat
 
         ///////////////////////////// PUBLIC METHODS ////////////////////////////////////////////    
 
-        //Set the target the projectile was fired at
+        /// <summary>
+        /// Set the target the projectile was fired at along with the amount of damage the targe will take
+        /// </summary>
         public void setTarget(GameObject attacker, Health target, float damage)
         {
             //Set relevant variables
             m_Target = target;
             m_weaponDamage = damage;
-            m_CharacterDamage = attacker.GetComponent<BaseStats>().GetStat(StatType.PhysicalDamage);
             m_Wielder = attacker;
-
             Destroy(gameObject, m_MaxLifetime);
+
+            //Check to see if this character has equipment slots
+            //var statEquipComp = attacker.GetComponent<StatsEquipment>();
+
+            //Character does not have equipment then use sent damage value
+            //if (statEquipComp==null)
+            //{
+            //    m_weaponDamage = damage;
+            //}
+            //else
+            //{
+            //    //Character has equipment so damage is included in base stats call.
+            //    m_weaponDamage = 0;
+            //}
+
+            //m_CharacterDamage = attacker.GetComponent<BaseStats>().GetStat(StatType.PhysicalDamage);
+
         }
     }
 }

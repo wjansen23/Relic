@@ -64,10 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Asset Packs\GameDev.tv Assets\Scripts\Utils\LazyValue.cs" />
+    <Compile Include="Assets\Scripts\Abilities\Abilities.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityItem.cs" />
     <Compile Include="Assets\Scripts\Actions\ActionItem.cs" />
     <Compile Include="Assets\Scripts\Actions\ActionStore.cs" />
     <Compile Include="Assets\Scripts\Attributes\Health.cs" />
     <Compile Include="Assets\Scripts\Attributes\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Attributes\Magic.cs" />
     <Compile Include="Assets\Scripts\Combat\CharacterCombat.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatTarget.cs" />
     <Compile Include="Assets\Scripts\Combat\Projectile.cs" />
@@ -91,6 +94,10 @@
     <Compile Include="Assets\Scripts\Inventories\Inventory.cs" />
     <Compile Include="Assets\Scripts\Inventories\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\Inventories\ItemDropper.cs" />
+    <Compile Include="Assets\Scripts\Inventories\LootDropTable.cs" />
+    <Compile Include="Assets\Scripts\Inventories\RandomItemDropper.cs" />
+    <Compile Include="Assets\Scripts\Inventories\StatsEquipment.cs" />
+    <Compile Include="Assets\Scripts\Inventories\StatsEquipmentItem.cs" />
     <Compile Include="Assets\Scripts\Movement\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Pickups\ClickablePickup.cs" />
     <Compile Include="Assets\Scripts\Pickups\HealthPickup.cs" />
@@ -111,6 +118,7 @@
     <Compile Include="Assets\Scripts\Stats\IModifierProvider.cs" />
     <Compile Include="Assets\Scripts\Stats\Progression.cs" />
     <Compile Include="Assets\Scripts\Stats\StatType.cs" />
+    <Compile Include="Assets\Scripts\UI\Actions\AbilitySlotUI.cs" />
     <Compile Include="Assets\Scripts\UI\Actions\ActionSlotUI.cs" />
     <Compile Include="Assets\Scripts\UI\DamageText\DamageText.cs" />
     <Compile Include="Assets\Scripts\UI\DamageText\DamageTextSpawner.cs" />
@@ -125,6 +133,7 @@
     <Compile Include="Assets\Scripts\UI\Inventories\ItemTooltipSpawner.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD\PlayerHealthDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD\PlayerLevelDisplay.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerHUD\PlayerMagicDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHUD\PlayerXPDisplay.cs" />
     <Compile Include="Assets\Scripts\UI\Random Dialog\RandomDialogText.cs" />
     <Compile Include="Assets\Scripts\UI\ShowHideUI.cs" />

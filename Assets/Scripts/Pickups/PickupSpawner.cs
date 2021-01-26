@@ -22,7 +22,8 @@ namespace RPG.Inventories
         /// <returns></returns>
         public object CaptureState()
         {
-            return IsCollected();
+            //Debug.Log("Save Pick " + this.name + "(" + m_WasCollected + ")");
+            return m_WasCollected;
         }
 
         /// <summary>
@@ -32,16 +33,16 @@ namespace RPG.Inventories
         public void RestoreState(object state)
         {
             //Get whether the object collected or not and store in class variable
-            //bool wasCollected = (bool)state;
             m_WasCollected = (bool)state;
+            //Debug.Log("Restore Pick " + this.name + "(" + m_WasCollected + ")");
 
             //Now compare the save state to the current state and either spawn or destroy the pickup
-            if (m_WasCollected && !IsCollected())
+            if (m_WasCollected && AlreadySpawned())
             {
                 DestroyPickup();
             }
 
-            if (!m_WasCollected && IsCollected())
+            if (!m_WasCollected && !AlreadySpawned())
             {
                 SpawnPickup();
             }
@@ -54,15 +55,15 @@ namespace RPG.Inventories
         // Start is called before the first frame update
         private void Awake()
         {
-            if (!m_WasCollected)
-            {
-                SpawnPickup();
-            }
+
         }
 
         private void Start()
         {
-
+            if (!m_WasCollected)
+            {
+                SpawnPickup();
+            }
         }
 
         /// <summary>
@@ -70,6 +71,7 @@ namespace RPG.Inventories
         /// </summary>
         private void SpawnPickup()
         {
+            //Debug.Log("Spawn Pick " + this.name + "(" + m_WasCollected + ")");
             var spawnedPickup = m_Item.SpawnPickup(transform.position, m_Number);
             spawnedPickup.transform.SetParent(transform);
         }
@@ -85,6 +87,11 @@ namespace RPG.Inventories
             }
         }
 
+        private bool AlreadySpawned()
+        {
+            return GetPickup() == null;
+        }
+
         ///////////////////////////// PUBLIC METHODS //////////////////////////////////////////// 
 
         /// <summary>
@@ -97,25 +104,23 @@ namespace RPG.Inventories
         }
 
         /// <summary>
-        /// Has the pickup been taken
+        /// Returns whether the pickup has been taken
         /// </summary>
         /// <returns></returns>
         public bool IsCollected()
         {
-            return GetPickup() == null;
+            return m_WasCollected;
         }
 
 
         /// <summary>
-        /// Returns whether the pickup was collected.  
-        /// 
-        /// This for instances where IsCollected is not sufficient to check if pickup was taken during
-        /// the loading of a save game on game start.
+        /// Sets whether the pickup has been collected  
         /// </summary>
         /// <returns></returns>
-        public bool WasCollected()
+        public void WasCollected(bool flag)
         {
-            return m_WasCollected;
+            m_WasCollected=flag;
         }
+
     }
 }

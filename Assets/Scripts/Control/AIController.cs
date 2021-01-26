@@ -16,7 +16,7 @@ namespace RPG.Control
         [SerializeField] float m_WaypointStopDistance = 1f;                 //Used to determine how far from the current waypoints position the AI needs to be before being considered there
         [SerializeField] float m_AgroRadius = 5f;                           //Radius from AI to cause additional AI to aggro on the player
 
-        public enum AIState {PATROL,ATTACK,SUSPICION,DEAD,AGGRO};                  //The different states the AI can be in.
+        public enum AIState {PATROL,ATTACK,SUSPICION,DEAD,AGGRO};           //The different states the AI can be in.
 
         CharacterMovement m_Mover;                                          //Reference for character movement for the AI
         CharacterCombat m_Combat;                                           //Reference for character combat for the AI

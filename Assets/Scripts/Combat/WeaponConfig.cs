@@ -1,21 +1,46 @@
 ﻿using UnityEngine;
 using RPG.Attributes;
+using RPG.Inventories;
+using RPG.Stats;
+using System.Collections.Generic;
 
 namespace RPG.Combat
 {
     //Adds a new menu choice off of the create menu item
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/Make New Weapon", order = 0)]
 
-    public class WeaponConfig : ScriptableObject
+    public class WeaponConfig : EquipableItem, IModifierProvider
     {
         [SerializeField] AnimatorOverrideController m_weaponAOC = null;     //Animation override controller for weapon
-        [SerializeField] Weapon m_equippedPrefab = null;                //What is the character equipping.  Usually the weapon being used
+        [SerializeField] Weapon m_equippedPrefab = null;                    //What is the character equipping.  Usually the weapon being used
         [SerializeField] float m_weaponRange = 2f;                          //Attack Range of Character
         [SerializeField] float m_weaponDamage = 20f;                        //Amount of damage that each attack does
         [SerializeField] bool m_weaponHandRight = true;                     //Is the weapon right or left handed
         [SerializeField] Projectile m_projectile = null;                    //For a ranged weapon what is its projectile
 
         const string m_WeaponName = "Weapon";                               //String reference for locating weapon objects
+
+        ///////////////////////////// INTERFACES ////////////////////////////////////////////   
+
+        public IEnumerable<float> GetStatAdditiveModifiers(StatType reqStat)
+        {
+            if (reqStat == StatType.PhysicalDamage)
+            {
+                //Addition damage outside of weapon damage the weapon does
+                yield return 0;
+            }
+        }
+
+        public IEnumerable<float> GetStatPercentageModifiers(StatType reqStat)
+        {
+            if (reqStat == StatType.PhysicalDamage)
+            {
+                //Addition outside of the weapon damage the weapon does.
+                yield return 0;
+            }
+        }
+
+        ///////////////////////////// PRIVATE METHODS ////////////////////////////////////////////   
 
         //Returns the hand the weapon is in
         private Transform GetWeaponHand(Transform rthand, Transform lfhand)
@@ -104,10 +129,11 @@ namespace RPG.Combat
         //Launches the projectile from the weapon
         public void LaunchProjectile(GameObject attacker, Transform rthand, Transform lfhand,Health target)
         {
+            float amount = attacker.GetComponent<BaseStats>().GetStat(StatType.PhysicalDamage)+m_weaponDamage;
+
             //Create the projectile
             Projectile projectileInstance = Instantiate(m_projectile, GetWeaponHand(rthand, lfhand).position, Quaternion.identity);
-            projectileInstance.setTarget(attacker, target,m_weaponDamage);
+            projectileInstance.setTarget(attacker, target, amount);
         }
-
     }
 }

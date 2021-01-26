@@ -53,6 +53,11 @@ namespace RPG.UI.Inventories
         /// <returns></returns>
         public int MaxAcceptable(InventoryItem item)
         {
+            //If the item trying to be added is an ability do not allow it.
+            var dropitem = item as AbilityItem;
+            if (dropitem != null) return 0;
+
+            //See if the inventoy has space for the item.
             if (m_Inventory.HasSpaceFor(item))
             {
                 return int.MaxValue;

@@ -152,6 +152,7 @@ namespace RPG.Core.UI.Dragging
         /// <returns></returns>
         private bool AttemptSimpleTransfer(IDragDestination<T> destination,InputButton button)
         {
+            //Debug.Log("In simple transfer");
             //Get the current item and number from the source container
             var draggingItem = m_source.GetItem();
             var draggingNumber = 0;
@@ -187,12 +188,20 @@ namespace RPG.Core.UI.Dragging
         /// <param name="sourceContainer"></param>
         private void AttemptSwap(IDragContainer<T> destinationContainer, IDragContainer<T> sourceContainer)
         {
+            //Debug.Log("In SWAP");
             //Get the item and its number for both the source and destination containers
             //This is so we know what to swap
             var removedSourceNum = sourceContainer.GetNumber();
             var removedSourceItem = sourceContainer.GetItem();
             var removeDestinationNum = destinationContainer.GetNumber();
             var removeDestinationItem = destinationContainer.GetItem();
+
+            //Debug.Log("S#:: " + removedSourceNum + " D#::" + removeDestinationNum);
+
+            //Perform a series of checks to make sure there are items to swap.
+            if (removeDestinationNum == 0||removedSourceNum==0) return; ///Added to account either the dest or source not having any items.
+            if (destinationContainer.MaxAcceptable(removedSourceItem) < 1) return; ///No need to swap if destination cannot accept source item
+            if (sourceContainer.MaxAcceptable(removeDestinationItem) < 1) return; ///No need to swap if source cannot accept destination item
 
             //Zero out item counts from source and destination
             m_source.RemoveItems(removedSourceNum);
@@ -210,14 +219,17 @@ namespace RPG.Core.UI.Dragging
             }
             if (destinationTakebackNum > 0)
             {
+                //Debug.Log(" D2#::" + destinationTakebackNum);
                 //Put takeback number of destination items back into container. 
                 destinationContainer.AddItems(removeDestinationItem, destinationTakebackNum);
                 removeDestinationNum -= destinationTakebackNum;
             }
 
+            //Debug.Log(sourceContainer.MaxAcceptable(removeDestinationItem) +"::" + removeDestinationNum + "||"+ destinationContainer.MaxAcceptable(removedSourceItem) +"::"+ removedSourceNum);
             //Abort if we can't do the swap
             if (sourceContainer.MaxAcceptable(removeDestinationItem) < removeDestinationNum || destinationContainer.MaxAcceptable(removedSourceItem) < removedSourceNum)
             {
+                //Debug.Log(" D3#::" + removeDestinationNum);
                 //reset everything back to the way it was
                 destinationContainer.AddItems(removeDestinationItem, removeDestinationNum);
                 sourceContainer.AddItems(removedSourceItem, removedSourceNum);
@@ -252,6 +264,8 @@ namespace RPG.Core.UI.Dragging
             
             //Get Maximum number of the item the destination can hold
             var destinationMaxAccept = destination.MaxAcceptable(removeItem);
+
+            //Debug.Log("CT ::" + destinationMaxAccept + " RN::" + removeNum);
 
             //Check if more of an item is being moved to the destination than can be accepted
             if (destinationMaxAccept < removeNum)

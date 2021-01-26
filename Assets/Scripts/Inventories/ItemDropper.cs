@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using RPG.Saving;
 
 namespace RPG.Inventories
@@ -11,7 +12,8 @@ namespace RPG.Inventories
     /// </summary>
     public class ItemDropper : MonoBehaviour, ISaveable
     {
-        private List<Pickup> m_DroppedItems = new List<Pickup>();           //Holds reference to all dropped items.
+        private List<Pickup> m_DroppedItems = new List<Pickup>();                   //Holds reference to all dropped items.
+        private List<DropRecord> m_OtherSceneDroppedItems = new List<DropRecord>(); //List of items dropped in other scenes
 
         [System.Serializable]
         private struct DropRecord
@@ -19,31 +21,55 @@ namespace RPG.Inventories
             public string itemID;
             public SerializableVector3 position;
             public int number;
+            public int sceneIndex;
         }
 
         ///////////////////////////// INTERFACES //////////////////////////////////////////// 
         
         public object CaptureState()
         {
+            //Makes sure we don't save destroyed items
             RemoveDestroyedDrops();
 
-            var droppedItemList = new DropRecord[m_DroppedItems.Count];
-            for (int i = 0; i < droppedItemList.Length; i++)
+            //Create a new list and get the scene index
+            var droppedItemList = new List<DropRecord>();
+            var buildIndex = SceneManager.GetActiveScene().buildIndex;
+
+            //Loop through the drop items list and store items.
+            foreach (Pickup pickup in m_DroppedItems)
             {
-                droppedItemList[i].itemID = m_DroppedItems[i].GetItem().GetItemID();
-                droppedItemList[i].position = new SerializableVector3(m_DroppedItems[i].transform.position);
-                droppedItemList[i].number = m_DroppedItems[i].GetNumber();
+                var droppeditem = new DropRecord();
+
+                droppeditem.itemID = pickup.GetItem().GetItemID();
+                droppeditem.position = new SerializableVector3(pickup.transform.position);
+                droppeditem.number = pickup.GetNumber();
+                droppeditem.sceneIndex = buildIndex;
+
+                droppedItemList.Add(droppeditem);
             }
 
+            //Merge with items from other scenes
+            droppedItemList.AddRange(m_OtherSceneDroppedItems);
             return droppedItemList;
         }
 
         public void RestoreState(object state)
         {
-            var droppedItemList = (DropRecord[])state;
+            var droppedItemList = (List<DropRecord>)state;
+            var buildIndex = SceneManager.GetActiveScene().buildIndex;
 
-            foreach(var item in droppedItemList)
+            //Clear list
+            m_OtherSceneDroppedItems.Clear();
+
+            foreach (var item in droppedItemList)
             {
+                //Check if items was from a different scene
+                if (item.sceneIndex != buildIndex)
+                {
+                    m_OtherSceneDroppedItems.Add(item);
+                    continue;
+                }
+
                 var pickupItem = InventoryItem.GetFromID(item.itemID);
                 Vector3 position = item.position.ToVector();
                 int number = item.number;
@@ -64,7 +90,6 @@ namespace RPG.Inventories
             //Spawn the item and add to dropped list
             var pickup = item.SpawnPickup(position, number);
             m_DroppedItems.Add(pickup);
-
         }
 
         /// <summary>

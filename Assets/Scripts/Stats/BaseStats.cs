@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace RPG.Stats
 {
+    /// <summary>
+    /// This class handles all the stats in the game.
+    /// </summary>
     public class BaseStats : MonoBehaviour
     {
         [Range (1,99)]
@@ -51,7 +54,9 @@ namespace RPG.Stats
             }
         }
 
-        //Checks to see if the characters level has changed.
+        /// <summary>
+        /// Checks to see if the characters level has changed.
+        /// </summary>
         private void UpdateLevel()
         {
             int tmpLevel = CalculateLevel();
@@ -63,7 +68,10 @@ namespace RPG.Stats
             }
         }
 
-        //Computes the characters level
+        /// <summary>
+        /// Computes the characters level
+        /// </summary>
+        /// <returns></returns>
         private int CalculateLevel()
         {
             //Check for XP component
@@ -85,13 +93,19 @@ namespace RPG.Stats
             return maxStatLevel + 1;
         }
 
-        //Plays the level up effect for a character
+        /// <summary>
+        /// Plays the level up effect for a character
+        /// </summary>
         private void PlayLevelUpEffect()
         {
             Instantiate(m_LevelUpFX, transform);
         }
 
-        //Get all additive modifiers for a stat
+        /// <summary>
+        /// Get all additive modifiers for a stat
+        /// </summary>
+        /// <param name="reqStat"></param>
+        /// <returns></returns>
         private float GetStatAdditiveModifier(StatType reqStat)
         {
             //chech for modifier use
@@ -111,7 +125,11 @@ namespace RPG.Stats
             return totalMod;
         }
 
-        //Get all multiplicative modifiers for a stat
+        /// <summary>
+        /// /Get all multiplicative modifiers for a stat
+        /// </summary>
+        /// <param name="reqStat"></param>
+        /// <returns></returns>
         private float GetStatPercentageModifier(StatType reqStat)
         {
             //chech for modifier use
@@ -133,14 +151,23 @@ namespace RPG.Stats
 
         ///////////////////////////// PUBLIC METHODS ////////////////////////////////////////////  
 
-        //Returns the value of a stat at the current level and scaled by any modifieres
+        /// <summary>
+        /// Returns the value of a stat at the current level and scaled by any modifieres
+        /// </summary>
+        /// <param name="reqStat"></param>
+        /// <returns></returns>
         public float GetStat(StatType reqStat)
         {
             float baseValue = m_Progression.GetStatByLevel(reqStat, m_CharacterClass, GetLevel());
             return baseValue * (1+GetStatPercentageModifier(reqStat)/100) + GetStatAdditiveModifier(reqStat);
         }
 
-        //Returns the value of a stat for the given level and scaled by any modifieres
+        /// <summary>
+        /// Returns the value of a stat for the given level and scaled by any modifieres
+        /// </summary>
+        /// <param name="reqStat"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public float GetStatAtLevel(StatType reqStat,int level)
         {
             //Check for out of bounds
@@ -150,7 +177,10 @@ namespace RPG.Stats
             return baseValue * (1 + GetStatPercentageModifier(reqStat) / 100) + GetStatAdditiveModifier(reqStat);
         }
 
-        //Returns what level the character is.b
+        /// <summary>
+        /// Returns what level the character is
+        /// </summary>
+        /// <returns></returns>
         public int GetLevel()
         {
             return m_currentLevel.value;

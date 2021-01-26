@@ -28,6 +28,21 @@ MonoBehaviour:
   m_ChaseWaitTime: 3
   m_PatrolPath: {fileID: 0}
   m_WaypointStopDistance: 1
+  m_AgroRadius: 5
+--- !u!114 &7915054122057948398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164607052840369955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535032059945f794ba3fcddd68e3e3fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DropDistance: 1
+  m_LootDropTable: {fileID: 0}
 --- !u!1001 &1731888527907360509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47,13 +62,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
         type: 3}
+      propertyPath: m_onDieEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
+        type: 3}
       propertyPath: m_TakeDamageEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
         type: 3}
+      propertyPath: m_onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
+        type: 3}
+      propertyPath: m_onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7915054122057948398}
+    - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
+        type: 3}
       propertyPath: m_TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
+        type: 3}
+      propertyPath: m_onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
+        type: 3}
+      propertyPath: m_onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RandomDrop
       objectReference: {fileID: 0}
     - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
         type: 3}
@@ -69,6 +109,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TakeDamageEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: Aggrevate
+      objectReference: {fileID: 0}
+    - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
+        type: 3}
+      propertyPath: m_onDieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2837110240675087030, guid: 627a4541a47c92c44bc7ba6a92aad6ad,
         type: 3}

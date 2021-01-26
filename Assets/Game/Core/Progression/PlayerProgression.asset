@@ -36,3 +36,17 @@ MonoBehaviour:
       - 4
       - 8
       - 16
+    - m_StatType: 2
+      m_Levels:
+      - 100
+      - 125
+      - 150
+      - 175
+      - 200
+    - m_StatType: 7
+      m_Levels:
+      - 0.1
+      - 0.1
+      - 0.1
+      - 0.1
+      - 0.1

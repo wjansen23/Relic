@@ -132,8 +132,10 @@ namespace RPG.Inventories
         /// <returns></returns>
         public int GetConsumableNumber(int index)
         {
+
             if (m_DockedItems.ContainsKey(index))
             {
+                //Debug.Log(index + " :: " + m_DockedItems[index].number);
                 return m_DockedItems[index].number;
             }
 

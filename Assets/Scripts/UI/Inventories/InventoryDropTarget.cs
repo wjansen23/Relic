@@ -22,6 +22,10 @@ namespace RPG.UI.Inventories
 
         public int MaxAcceptable(InventoryItem item)
         {
+            //If the item trying to be dropped in the scene is an ability do not drop it.
+            var dropitem = item as AbilityItem;
+            if (dropitem != null) return 0;
+
             return int.MaxValue;
         }
     }
